@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FF Diamond Top-Up</title>
+<style>
+body {
+  margin: 0;
+  background: #071326;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+header {
+  background: #10294a;
+  padding: 22px 10px;
+  color: #35d9ff;
+}
+main {
+  max-width: 500px;
+  margin: 25px auto;
+  padding: 16px;
+}
+input, button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border-radius: 8px;
+}
+input {
+  background: #10233c;
+  color: white;
+  border: 1px solid #2389c9;
+}
+.packages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pack {
+  padding: 18px 5px;
+  background: #10294a;
+  border: 1px solid #168bd0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.pack.selected {
+  border: 2px solid #ffe000;
+}
+button {
+  background: #ffd400;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+.note { color: #a9c6df; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>💎 FF DIAMOND TOP-UP</h1>
+  <p>Choose your diamond package</p>
+</header>
+
+<main>
+  <h3>Enter Player ID</h3>
+  <input id="player" placeholder="তোমার Player ID">
+
+  <h3>Select Package</h3>
+  <div class="packages" id="packages"></div>
+
+  <h3>Payment Method</h3>
+  <p>bKash / Nagad (Manual)</p>
+
+  <button onclick="order()">Submit Demo Order</button>
+  <p id="result"></p>
+  <p class="note">ডেমো ওয়েবসাইট — কোনো আসল পেমেন্ট বা ডায়মন্ড ডেলিভারি নেই।</p>
+</main>
+
+<script>
+const items = [
+  {d:100, p:50},
+  {d:310, p:140},
+  {d:520, p:220},
+  {d:1060, p:430}
+];
+let selected = 0;
+
+const area = document.getElementById("packages");
+
+items.forEach((item, i) => {
+  const card = document.createElement("div");
+  card.className = "pack" + (i === 0 ? " selected" : "");
+  card.innerHTML =
+    `💎<br><b>${item.d} Diamonds</b><br>৳${item.p}`;
+  card.onclick = () => {
+    selected = i;
+    document.querySelectorAll(".pack").forEach(
+      (el, j) => el.classList.toggle("selected", i === j)
+    );
+  };
+  area.appendChild(card);
+});
+
+function order() {
+  const id = document.getElementById("player").value.trim();
+  const result = document.getElementById("result");
+
+  if (!id) {
+    result.textContent = "আগে Player ID দাও!";
+    return;
+  }
+
+  result.textContent =
+    `Demo Order: Player ID ${id} | ` +
+    `${items[selected].d} Diamonds | ৳${items[selected].p}. ` +
+    "এটি শুধু পরীক্ষামূলক অর্ডার; সংরক্ষণ বা ডেলিভারি হয়নি।";
+}
+</script>
+</body>
+</html>
